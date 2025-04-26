@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="review-list">
+    <div th:each="review : ${reviews}">
+        <div class="card mb-4">
+            <div class="card-content">
+                <p class="title" th:text="${review.title}"></p>
+                <p class="subtitle" th:text="'Автор: ' + ${review.userName}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(reviews)}">
+        <article class="message is-info">
+            <div class="message-body">
+                Отзывы не найдены
+            </div>
+        </article>
+    </div>
+</div>
+</body>
+</html>
