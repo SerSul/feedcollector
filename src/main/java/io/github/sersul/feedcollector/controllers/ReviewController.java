@@ -1,7 +1,11 @@
 package io.github.sersul.feedcollector.controllers;
 
+import io.github.sersul.feedcollector.entity.Comment;
 import io.github.sersul.feedcollector.entity.Review;
+import io.github.sersul.feedcollector.repository.CommentRepository;
 import io.github.sersul.feedcollector.repository.ReviewRepository;
+import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,10 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
+
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewRepository reviewRepository;
+    private final CommentRepository commentRepository;
 
     @GetMapping("/")
     public String home(
@@ -35,5 +43,45 @@ public class ReviewController {
         var reviews = reviewRepository.findByTitleContainingIgnoreCase(title);
         model.addAttribute("reviews", reviews);
         return "fragments/review-list :: review-list";
+    }
+
+    @GetMapping("/reviews/{id}")
+    public String viewReview(@PathVariable Long id, Model model) {
+        var review = reviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
+        model.addAttribute("review", review);
+        return "review_page";
+    }
+
+    @GetMapping("/reviews/create")
+    public String createReview(Model model) {
+
+        return "fragments/add-review-page";
+    }
+
+    // Добавление комментария
+    @PostMapping("/reviews/{reviewId}/comments")
+    public String addComment(@PathVariable Long reviewId,
+                             @RequestParam String userComment,
+                             @RequestParam(required = false) Long parentCommentId,
+                             @ModelAttribute("userName") String userName) {
+
+        var review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
+
+        var comment = new Comment();
+        comment.setContent(userComment);
+        comment.setReview(review);
+        comment.setUserName(StringUtils.isNotBlank(userName) ? userName : "Anonymous");
+
+        if (parentCommentId != null) {
+            var parentComment = commentRepository.findById(parentCommentId)
+                    .orElseThrow(() -> new EntityNotFoundException("Родительский комментарий не найден"));
+            comment.setParentComment(parentComment);
+        }
+
+        commentRepository.save(comment);
+
+        return "redirect:/reviews/" + reviewId;
     }
 }

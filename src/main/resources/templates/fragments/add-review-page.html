@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="has-background-grey-lighter">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать отзыв</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .rating-input {
+            display: none;
+        }
+        .rating-label {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #ddd;
+        }
+        .rating-input:checked ~ .rating-label {
+            color: #ffd700;
+        }
+        .rating-label:hover,
+        .rating-label:hover ~ .rating-label {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+<header class="section">
+    <div class="container">
+        <div class="level">
+            <div class="level-left">
+                <a th:href="@{/}" class="title" style="text-decoration: none; color: inherit;">
+                    <h1 class="title">Создать отзыв</h1>
+                </a>
+            </div>
+            <div class="level-right">
+                <a th:href="@{/}" class="button is-light">
+                    <span class="icon">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                    <span>Назад к отзывам</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-two-thirds">
+                <div class="card">
+                    <div class="card-content">
+                        <form th:action="@{/reviews}" method="post">
+                            <div class="field">
+                                <label class="label">Заголовок</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="title" placeholder="Краткий заголовок отзыва" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Ваше имя</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="userName" placeholder="Как вас зовут?" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Оценка</label>
+                                <div class="control rating-stars">
+                                    <div class="field is-grouped">
+                                        <input type="radio" id="star5" name="rating" value="5" class="rating-input" checked>
+                                        <label for="star5" class="rating-label">★</label>
+
+                                        <input type="radio" id="star4" name="rating" value="4" class="rating-input">
+                                        <label for="star4" class="rating-label">★</label>
+
+                                        <input type="radio" id="star3" name="rating" value="3" class="rating-input">
+                                        <label for="star3" class="rating-label">★</label>
+
+                                        <input type="radio" id="star2" name="rating" value="2" class="rating-input">
+                                        <label for="star2" class="rating-label">★</label>
+
+                                        <input type="radio" id="star1" name="rating" value="1" class="rating-input">
+                                        <label for="star1" class="rating-label">★</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Текст отзыва</label>
+                                <div class="control">
+                                    <textarea class="textarea" name="content" placeholder="Подробно опишите ваш опыт..." rows="6" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <button type="submit" class="button is-primary">
+                                        <span class="icon">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </span>
+                                        <span>Опубликовать отзыв</span>
+                                    </button>
+                                </div>
+                                <div class="control">
+                                    <a th:href="@{/}" class="button is-light">Отмена</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Добавляем интерактивность для звезд рейтинга
+    document.querySelectorAll('.rating-label').forEach(label => {
+        label.addEventListener('click', () => {
+            const inputId = label.getAttribute('for');
+            document.getElementById(inputId).checked = true;
+        });
+    });
+</script>
+</body>
+</html>

@@ -5,8 +5,16 @@
     <div th:each="review : ${reviews}">
         <div class="card mb-4">
             <div class="card-content">
-                <p class="title" th:text="${review.title}"></p>
+                <a th:href="@{/reviews/{id}(id=${review.id})}" style="text-decoration: none; color: inherit;">
+                    <p class="title" th:text="${review.title}"></p>
+                </a>
                 <p class="subtitle" th:text="'Автор: ' + ${review.userName}"></p>
+                <div class="content" th:text="${review.content}"></div>
+                <div class="tags">
+                    <span class="tag is-info" th:text="${review.rating} + ' ★'"></span>
+                    <span class="tag is-light" th:text="${#temporals.format(review.createdAt, 'dd.MM.yyyy')}"></span>
+                    <span class="tag is-success" th:text="${review.comments.size()} + ' комментариев'"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -14,7 +22,7 @@
     <div th:if="${#lists.isEmpty(reviews)}">
         <article class="message is-info">
             <div class="message-body">
-                Отзывы не найдены
+                Отзывы по запросу не найдены
             </div>
         </article>
     </div>

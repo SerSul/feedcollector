@@ -16,29 +16,31 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Review extends BaseEntity {
 
-     @Column(nullable = false)
-     String title;
+    @Column(nullable = false, name = "title_p")
+    String title;
 
-     @Column(nullable = true)
-     String description;
+    @Column(nullable = true, name = "description_p")
+    String description;
 
-     @Column(nullable = false)
-     String review;
+    @Column(nullable = false, name = "content_p")
+    String content;
 
-     String url;
+    String url;
 
-     @Range(min = 0, max = 5, message = "Rating must be between 0 and 5")
-     Integer rating;
+    @Range(min = 0, max = 5, message = "Rating must be between 0 and 5")
+    @Column(name = "rating_p")
+    Integer rating;
 
-     boolean processed;
+    @Column(name = "processed_p")
+    boolean processed;
 
-     @Column(nullable = true, name = "user_name")
-     String userName = "Anonymous";
+    @Column(nullable = true, name = "user_name_p")
+    String userName = "Anonymous";
 
-     @OneToMany(cascade = CascadeType.ALL)
-     List<Comment> comments = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "review")
+    List<Comment> comments;
 
-     @OneToMany(cascade = CascadeType.ALL)
-     List<Tag> tags;
+    @OneToMany(fetch = FetchType.EAGER)
+    List<Tag> tags;
 
 }

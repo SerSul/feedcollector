@@ -5,3 +5,18 @@ html, body {
     margin: 0;
 }
 
+
+.reset-reply {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    color: #888;
+    z-index: 4;
+}
+.reset-reply:hover {
+    color: #333;
+}
+.control.has-icons-right {
+    position: relative;
+}
