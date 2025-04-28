@@ -23,6 +23,15 @@
                                     <span class="tag is-info ml-2" th:text="${review.rating} + ' ★'"></span>
                                     <span class="is-size-7 has-text-grey ml-2"
                                           th:text="${#temporals.format(review.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                                    <a th:href="${review.url}"
+                                       target="_blank"
+                                       class="tag is-link is-light"
+                                       th:if="${review.url != null}">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </span>
+                                        <span>Ссылка на ресурс</span>
+                                    </a>
                                 </p>
                                 <p th:text="${review.content}"></p>
                             </div>
@@ -30,7 +39,6 @@
                     </article>
                 </div>
 
-                <!-- Форма добавления комментария -->
                 <div class="box mt-5">
                     <div th:if="${#lists.isEmpty(review?.comments)}" class="notification is-light">
                         Пока нет комментариев. Будьте первым!

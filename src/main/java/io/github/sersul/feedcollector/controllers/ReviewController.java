@@ -18,8 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
@@ -60,12 +58,14 @@ public class ReviewController {
                 .orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
         model.addAttribute("review", review);
         model.addAttribute("username", userName);
-        return "review_page";
+        return "review-page";
     }
 
     @GetMapping("/reviews/new")
-    public String showCreateForm(Model model, HttpServletRequest request) {
+    public String showCreateForm(Model model, HttpServletRequest request,
+                                 @CookieValue(value = "username", required = false) String userName) {
         model.addAttribute("review", new CreateReviewDto());
+        model.addAttribute("username", userName);
         return "create-review";
     }
 
@@ -73,7 +73,6 @@ public class ReviewController {
     public String createReview(
             @ModelAttribute("review") @Valid CreateReviewDto dto,
             BindingResult result,
-            HttpServletRequest request,
             @CookieValue(value = "username", required = false) String userName
     ) {
         if (result.hasErrors()) {
