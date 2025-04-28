@@ -1,23 +1,31 @@
 package io.github.sersul.feedcollector.controllers;
 
+import io.github.sersul.feedcollector.dto.CreateReviewDto;
 import io.github.sersul.feedcollector.entity.Comment;
 import io.github.sersul.feedcollector.entity.Review;
 import io.github.sersul.feedcollector.repository.CommentRepository;
 import io.github.sersul.feedcollector.repository.ReviewRepository;
+import io.github.sersul.feedcollector.service.ReviewService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewRepository reviewRepository;
     private final CommentRepository commentRepository;
+    private final ReviewService reviewService;
 
     @GetMapping("/")
     public String home(
@@ -55,12 +63,25 @@ public class ReviewController {
         return "review_page";
     }
 
-    @GetMapping("/reviews/create")
-    public String createReview(Model model,
-                               @CookieValue(value = "username", required = false) String userName
-    ) {
+    @GetMapping("/reviews/new")
+    public String showCreateForm(Model model, HttpServletRequest request) {
+        model.addAttribute("review", new CreateReviewDto());
+        return "create-review";
+    }
 
-        return "fragments/add-review-page";
+    @PostMapping("/reviews")
+    public String createReview(
+            @ModelAttribute("review") @Valid CreateReviewDto dto,
+            BindingResult result,
+            HttpServletRequest request,
+            @CookieValue(value = "username", required = false) String userName
+    ) {
+        if (result.hasErrors()) {
+            return "create-review";
+        }
+
+        reviewService.createReview(dto, StringUtils.isNotBlank(userName) ? userName : "Anonymous");
+        return "redirect:/";
     }
 
     // Добавление комментария

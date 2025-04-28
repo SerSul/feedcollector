@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать отзыв</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">Новый отзыв</p>
+                    </div>
+                    <div class="card-content">
+                        <form th:action="@{/reviews}" th:object="${review}" method="post">
+                            <!-- Название -->
+                            <div class="field">
+                                <label class="label">Название*</label>
+                                <div class="control">
+                                    <input class="input" th:field="*{title}" type="text" placeholder="Краткое название">
+                                </div>
+                                <p class="help is-danger" th:if="${#fields.hasErrors('title')}"
+                                   th:errors="*{title}"></p>
+                            </div>
+
+                            <!-- Описание -->
+                            <div class="field">
+                                <label class="label">Краткое описание</label>
+                                <div class="control">
+                                    <input class="input" th:field="*{description}" type="text"
+                                           placeholder="Необязательное краткое описание">
+                                </div>
+                            </div>
+
+                            <!-- URL ресурса -->
+                            <div class="field">
+                                <label class="label">Ссылка на ресурс*</label>
+                                <div class="control">
+                                    <input class="input" th:field="*{url}" type="url"
+                                           placeholder="https://example.com">
+                                </div>
+                                <p class="help is-danger" th:if="${#fields.hasErrors('url')}"
+                                   th:errors="*{url}"></p>
+                            </div>
+
+                            <!-- Оценка -->
+                            <div class="field">
+                                <label class="label">Ваша оценка*</label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select th:field="*{rating}">
+                                            <option value="1">1 ★</option>
+                                            <option value="2">2 ★</option>
+                                            <option value="3">3 ★</option>
+                                            <option value="4">4 ★</option>
+                                            <option value="5">5 ★</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Текст отзыва -->
+                            <div class="field">
+                                <label class="label">Текст отзыва*</label>
+                                <div class="control">
+                                        <textarea class="textarea" th:field="*{content}"
+                                                  placeholder="Подробно опишите ваше мнение"></textarea>
+                                </div>
+                                <p class="help is-danger" th:if="${#fields.hasErrors('content')}"
+                                   th:errors="*{content}"></p>
+                            </div>
+
+                            <!-- Кнопки -->
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <button type="submit" class="button is-primary">Опубликовать</button>
+                                </div>
+                                <div class="control">
+                                    <a th:href="@{/}" class="button is-light">Отмена</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

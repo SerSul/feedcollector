@@ -15,6 +15,8 @@ import java.util.Optional;
 @Repository
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Long> {
 
+    void save(Review review);
+
     List<Review> findAllByTitle(String title);
 
     List<Review> findAllByUserName(String userName);
