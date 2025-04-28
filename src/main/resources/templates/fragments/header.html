@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Фрагмент хедера -->
+<header th:fragment="header" class="section">
+    <div class="container">
+        <div class="level">
+            <div class="level-left">
+                <a th:href="@{/}" class="title" style="text-decoration: none; color: inherit;">
+                    <h1 class="title">Отзывы</h1>
+                </a>
+            </div>
+            <div class="level-right">
+                <div id="usernameContainer" class="mr-3">
+                    <!-- Проверяем передан ли username в модели -->
+                    <div th:if="${username != null}" class="tags has-addons">
+                        <span class="tag is-primary is-medium" th:text="${username}"></span>
+                        <a class="tag is-delete is-medium" th:href="@{/clear-username}"></a>
+                    </div>
+                    <div th:unless="${username != null}">
+                        <form th:action="@{/save-username}" method="post" class="field has-addons">
+                            <div class="control">
+                                <input class="input" type="text" name="username" placeholder="Ваш ник" required>
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-primary">
+                                        <span class="icon">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <button class="button is-primary">
+                        <span class="icon">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                    <span>Создать отзыв</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>

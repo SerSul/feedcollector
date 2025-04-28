@@ -13,9 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.time.LocalDateTime;
-
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
@@ -26,12 +23,14 @@ public class ReviewController {
     public String home(
             Model model,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "5") int size,
+            @CookieValue(value = "username", required = false) String username
     ) {
         Page<Review> reviewPage = reviewRepository.findAll(PageRequest.of(page, size));
         model.addAttribute("reviews", reviewPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", reviewPage.getTotalPages());
+        model.addAttribute("username", username);
         return "index";
     }
 
@@ -46,15 +45,20 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/{id}")
-    public String viewReview(@PathVariable Long id, Model model) {
+    public String viewReview(@PathVariable Long id,
+                             @CookieValue(value = "username", required = false) String userName,
+                             Model model) {
         var review = reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
         model.addAttribute("review", review);
+        model.addAttribute("username", userName);
         return "review_page";
     }
 
     @GetMapping("/reviews/create")
-    public String createReview(Model model) {
+    public String createReview(Model model,
+                               @CookieValue(value = "username", required = false) String userName
+    ) {
 
         return "fragments/add-review-page";
     }
@@ -64,7 +68,7 @@ public class ReviewController {
     public String addComment(@PathVariable Long reviewId,
                              @RequestParam String userComment,
                              @RequestParam(required = false) Long parentCommentId,
-                             @ModelAttribute("userName") String userName) {
+                             @CookieValue(value = "username", required = false) String userName) {
 
         var review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
