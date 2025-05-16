@@ -1,7 +1,7 @@
 package io.github.sersul.feedcollector.service;
 
 
-import io.github.sersul.feedcollector.dto.CreateReviewDto;
+import io.github.sersul.feedcollector.dto.request.CreateReviewDto;
 import io.github.sersul.feedcollector.entity.Review;
 import io.github.sersul.feedcollector.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;

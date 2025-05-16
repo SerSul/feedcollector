@@ -1,4 +1,4 @@
-package io.github.sersul.feedcollector.dto;
+package io.github.sersul.feedcollector.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
