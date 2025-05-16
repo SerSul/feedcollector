@@ -1,5 +1,6 @@
 package io.github.sersul.feedcollector.entity;
 
+import io.github.sersul.feedcollector.entity.security.User;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Review extends BaseEntity {
 
@@ -34,8 +36,9 @@ public class Review extends BaseEntity {
     @Column(name = "processed_p")
     boolean processed;
 
-    @Column(nullable = true, name = "user_name_p")
-    String userName = "Anonymous";
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    User user;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "review")
     List<Comment> comments;

@@ -1,5 +1,6 @@
 package io.github.sersul.feedcollector.dto.request.security;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -10,8 +11,8 @@ import lombok.*;
 public class LoginRequestDTO {
 
     @NotBlank
-    @Email
-    private String email;
+    @JsonProperty("user_name")
+    private String userName;
 
     @NotBlank
     private String password;
