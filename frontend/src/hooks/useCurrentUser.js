@@ -35,7 +35,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             refreshUser();
-        }, 6000);
+        }, 60000);
 
         // Очистка интервала при размонтировании
         return () => clearInterval(intervalId);

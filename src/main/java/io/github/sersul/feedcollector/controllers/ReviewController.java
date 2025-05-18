@@ -58,7 +58,7 @@ public class ReviewController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public ResponseEntity<ReviewDto> getReviewById(@PathVariable Long id) {
         var review = reviewService.getReviewById(id);
         return review
