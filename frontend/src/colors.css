@@ -1,0 +1,49 @@
+:root {
+    --color-main: #ffffff;
+    --color-secondary: #ececec;
+    --color-thirdly: #979797;
+    --color-fourthly: #656565;
+    --text-main: #5c5c5c;
+    --text-secondary: #8e8e8e;
+}
+
+.has-background-main {
+    background-color: var(--color-main) !important;
+}
+
+.has-text-main {
+    color: var(--color-main) !important;
+}
+
+.has-background-secondary {
+    background-color: var(--color-secondary) !important;
+}
+
+.has-background-thirdly {
+    background-color: var(--color-thirdly) !important;
+}
+.has-background-fourthly {
+    background-color: var(--color-fourthly) !important;
+}
+
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.input-placeholder-light::placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+.input-placeholder-light::-webkit-input-placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+.input-placeholder-light:-ms-input-placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}

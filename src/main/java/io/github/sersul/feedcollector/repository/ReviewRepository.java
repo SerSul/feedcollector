@@ -16,18 +16,5 @@ import java.util.Optional;
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Long> {
 
     void save(Review review);
-
-    List<Review> findAllByTitle(String title);
-
-    List<Review> findAllByUserName(String userName);
-
     Optional<Review> findById(Long id);
-
-    List<Review> findAll();
-
-    Page<Review> findAllByUserName(String userName, Pageable pageable);
-
-    Page<Review> findAllByTitle(String title, Pageable pageable);
-
-    List<Review> findByTitleContainingIgnoreCase(String title);
 }

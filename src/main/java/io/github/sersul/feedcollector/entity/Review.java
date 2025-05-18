@@ -1,5 +1,6 @@
 package io.github.sersul.feedcollector.entity;
 
+import io.github.sersul.feedcollector.dto.response.ReviewDto;
 import io.github.sersul.feedcollector.entity.security.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,5 +46,18 @@ public class Review extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER)
     List<Tag> tags;
+
+    public ReviewDto toDto() {
+        return ReviewDto.builder()
+                .id(this.getId())
+                .title(this.getTitle())
+                .content(this.getContent())
+                .rating(this.getRating())
+                .description(this.getDescription())
+                .url(this.getUrl())
+                .createdAt(this.getCreatedAt())
+                .authorUsername(this.getUser().getUsername())
+                .build();
+    }
 
 }

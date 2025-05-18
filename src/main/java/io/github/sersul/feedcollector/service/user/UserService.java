@@ -18,8 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpRequest;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -32,7 +30,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
     public StandardResponse registerUser(RegistrationRequestDTO requestDTO) {
-        if (userRepository.existsByUsername(requestDTO.getUsername())) {
+        if (userRepository.existsByUsername(requestDTO.getUserName())) {
             return new StandardResponse(false,"Имя пользователя уже занято");
         }
 
@@ -43,7 +41,7 @@ public class UserService {
         String hashedPassword = passwordEncoder.encode(requestDTO.getPassword());
 
         User user = new User();
-        user.setUsername(requestDTO.getUsername());
+        user.setUsername(requestDTO.getUserName());
         user.setPassword(hashedPassword);
         user.setEmail(requestDTO.getEmail());
 

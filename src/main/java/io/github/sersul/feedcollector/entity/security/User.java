@@ -36,10 +36,10 @@ public class User extends BaseEntity {
     @Column(name = "is_locked", nullable = false)
     boolean isLocked = false;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     List<Review> reviews = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
