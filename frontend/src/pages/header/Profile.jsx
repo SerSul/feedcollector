@@ -20,34 +20,29 @@ export const Profile = () => {
         }
     };
 
-
     if (!user) {
-        return (
-            <Button variant="primary" onClick={() => window.location.href = '/login'}>
-                Войти
-            </Button>
-        );
+        return (<Button variant="primary" onClick={() => window.location.href = '/login'}>
+            Войти
+        </Button>);
     }
 
-    return (
-        <>
-            <Button variant="primary" onClick={handleShow}>
-                Профиль
-            </Button>
+    return (<>
+        <Button variant="primary" onClick={handleShow}>
+            Профиль
+        </Button>
 
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Профиль</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Имя: {user.name}</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="outline-danger" onClick={handleLogout}>
-                        Выйти
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    );
+        <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>Профиль</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>Имя: {user.name}</p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="outline-danger" onClick={handleLogout}>
+                    Выйти
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    </>);
 };

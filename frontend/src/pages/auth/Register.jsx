@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {
-    MDBContainer,
-    MDBInput,
-    MDBBtn,
+    MDBContainer, MDBInput, MDBBtn,
 } from 'mdb-react-ui-kit';
 import api from '../../api';
 
@@ -16,9 +14,7 @@ export default function Register() {
     const handleRegister = async () => {
         try {
             await api.post('/auth/register', {
-                email,
-                user_name: userName,
-                password
+                email, user_name: userName, password
             });
 
             navigate('/login');
@@ -28,7 +24,7 @@ export default function Register() {
     };
 
     return (
-        <div className="has-background-main d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <div className="has-background-grey-lighter d-flex justify-content-center align-items-center" style={{height: '100vh'}}>
             <MDBContainer className="mb-5 d-flex flex-column w-50 box">
                 <MDBInput
                     wrapperClass='mb-4'
@@ -65,6 +61,5 @@ export default function Register() {
                     <p>Already have an account? <a href="/login">Sign in</a></p>
                 </div>
             </MDBContainer>
-        </div>
-    );
+        </div>);
 }

@@ -25,12 +25,21 @@ export const UserProvider = ({ children }) => {
         }
     };
 
-    // Если пользователя нет, то пытаемся получить с сервера
+    // При монтировании компонента — сразу обновить пользователя
     useEffect(() => {
         if (!user) {
             refreshUser();
         }
-    }, [user]);
+    }, []);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            refreshUser();
+        }, 6000);
+
+        // Очистка интервала при размонтировании
+        return () => clearInterval(intervalId);
+    }, []);
 
     return (
         <UserContext.Provider value={{ user, refreshUser }}>

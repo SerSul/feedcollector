@@ -8,9 +8,9 @@ import Home from "./pages/Home";
 import 'bulma/css/bulma.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './colors.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Register from "./pages/auth/Register";
 import ReviewPage from "./pages/reviews/Review";
+import PrivateRoute from "./hooks/PrivateRoute";
 
 function App() {
     return (
@@ -20,7 +20,14 @@ function App() {
                 <Route path="/" element={<Navigate to="/home" replace />} />
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
-                <Route path="/create-review" element={<AddReview/>}/>
+                <Route
+                    path="/create-review"
+                    element={
+                        <PrivateRoute>
+                            <AddReview/>
+                        </PrivateRoute>
+                    }
+                />
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/reviews/:id" element={<ReviewPage />} />
             </Routes>

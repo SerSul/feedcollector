@@ -2,6 +2,7 @@ package io.github.sersul.feedcollector.service;
 
 
 import io.github.sersul.feedcollector.dto.request.CreateReviewDto;
+import io.github.sersul.feedcollector.dto.response.CommentDto;
 import io.github.sersul.feedcollector.dto.response.ReviewDto;
 import io.github.sersul.feedcollector.dto.response.StandardResponse;
 import io.github.sersul.feedcollector.entity.Review;
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,18 +57,31 @@ public class ReviewService {
 
     public Optional<ReviewDto> getReviewById(Long id) {
         return reviewRepository.findById(id)
-                .map(review -> ReviewDto.builder()
-                        .id(review.getId())
-                        .authorUsername(review.getUser().getUsername())
-                        .createdAt(review.getCreatedAt())
-                        .url(review.getUrl())
-                        .title(review.getTitle())
-                        .rating(review.getRating())
-                        .description(review.getDescription())
-                        .content(review.getContent())
-                        .build()
-                );
+                .map(review -> {
+                    var commentDtos = review.getComments().stream()
+                            .map(comment -> CommentDto.builder()
+                                    .id(comment.getId())
+                                    .authorUsername(comment.getUser().getUsername())
+                                    .createdAt(comment.getCreatedAt())
+                                    .content(comment.getContent())
+                                    .parentCommentId(comment.getParentComment() != null ? comment.getParentComment().getId() : null)
+                                    .build())
+                            .collect(Collectors.toList());
+
+                    return ReviewDto.builder()
+                            .id(review.getId())
+                            .authorUsername(review.getUser().getUsername())
+                            .createdAt(review.getCreatedAt())
+                            .url(review.getUrl())
+                            .title(review.getTitle())
+                            .rating(review.getRating())
+                            .description(review.getDescription())
+                            .content(review.getContent())
+                            .comments(commentDtos)  // добавляем комментарии
+                            .build();
+                });
     }
+
 
 
 }

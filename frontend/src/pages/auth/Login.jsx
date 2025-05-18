@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {
-    MDBContainer,
-    MDBInput,
-    MDBBtn,
+    MDBContainer, MDBInput, MDBBtn,
 } from 'mdb-react-ui-kit';
 import api from "../../api";
 
@@ -15,8 +13,7 @@ export default function Login() {
     const handleLogin = async () => {
         try {
             await api.post('/auth/login', {
-                user_name: email,
-                password: password
+                user_name: email, password: password
             });
 
             navigate("/home");
@@ -27,35 +24,34 @@ export default function Login() {
     };
 
     return (
-        <div className="has-background-main d-flex justify-content-center align-items-center" style={{height: '100%'}}>
-                <MDBContainer className="mb-5 d-flex flex-column box w-50 ">
-                    <MDBInput
-                        wrapperClass='mb-4'
-                        id='form1'
-                        placeholder='Login'
-                        type='email'
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
+        <div className="has-background-grey-lighter d-flex justify-content-center align-items-center" style={{height: '100%'}}>
+            <MDBContainer className="mb-5 d-flex flex-column box w-50 ">
+                <MDBInput
+                    wrapperClass='mb-4'
+                    id='form1'
+                    placeholder='Login'
+                    type='email'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                />
 
-                    <MDBInput
-                        wrapperClass='mb-4'
-                        id='form2'
-                        placeholder='Password'
-                        type='password'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
+                <MDBInput
+                    wrapperClass='mb-4'
+                    id='form2'
+                    placeholder='Password'
+                    type='password'
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                />
 
-                    <MDBBtn className="mb-4" onClick={handleLogin}>
-                        Sign in
-                    </MDBBtn>
+                <MDBBtn className="mb-4" onClick={handleLogin}>
+                    Sign in
+                </MDBBtn>
 
-                    <div className="text-center">
-                        <p>Not a member? <a href="/register">Register</a></p>
-                    </div>
-                </MDBContainer>
-        </div>
-    );
+                <div className="text-center">
+                    <p>Not a member? <a href="/register">Register</a></p>
+                </div>
+            </MDBContainer>
+        </div>);
 
 }

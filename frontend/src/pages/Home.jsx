@@ -50,67 +50,62 @@ const Home = () => {
 
     return (
         <div className="has-background-grey-lighter" style={{height: '100%'}}>
-            <section className="section container">
-                <div className="box is-small">
-                    <div className="container">
-                        {/* Поиск */}
-                        <div className="control mb-3 has-icons-left">
-                            <input
-                                className="input is-medium border-0 has-background-secondary"
-                                style={{}}
-                                type="text"
-                                value={searchQuery}
-                                onChange={handleSearchChange}
-                            />
-                            <span className="icon is-left">
+        <section className="section container">
+            <div className="box is-small">
+                <div className="container">
+                    {/* Поиск */}
+                    <div className="control mb-3 has-icons-left">
+                        <input
+                            className="input is-medium border-0 has-background-secondary"
+                            style={{}}
+                            type="text"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                        <span className="icon is-left">
                                 <FontAwesomeIcon icon={faSearch}/>
                             </span>
-                        </div>
-
-                        {/* Список отзывов */}
-                        <ReviewList reviews={reviews}/>
-
-                        {/* Пагинация */}
-                        {totalPages > 1 && (
-                            <nav
-                                className="pagination is-centered"
-                                role="navigation"
-                                aria-label="pagination"
-                                style={{marginTop: '20px'}}
-                            >
-                                <button
-                                    className="pagination-previous button"
-                                    onClick={handlePrev}
-                                    disabled={page === 0}
-                                >
-                                    Назад
-                                </button>
-                                <button
-                                    className="pagination-next button"
-                                    onClick={handleNext}
-                                    disabled={page === totalPages - 1}
-                                >
-                                    Вперед
-                                </button>
-                                <ul className="pagination-list">
-                                    {Array.from({length: totalPages}, (_, i) => (
-                                        <li key={i}>
-                                            <button
-                                                className={`pagination-link button ${i === page ? 'is-current' : ''}`}
-                                                onClick={() => setPage(i)}
-                                            >
-                                                {i + 1}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </nav>
-                        )}
                     </div>
+
+                    {/* Список отзывов */}
+                    <ReviewList reviews={reviews}/>
+
+                    {/* Пагинация */}
+                    {totalPages > 1 && (<nav
+                        className="pagination is-centered"
+                        role="navigation"
+                        aria-label="pagination"
+                        style={{marginTop: '20px'}}
+                    >
+                        <button
+                            className="pagination-previous button"
+                            onClick={handlePrev}
+                            disabled={page === 0}
+                        >
+                            Назад
+                        </button>
+                        <button
+                            className="pagination-next button"
+                            onClick={handleNext}
+                            disabled={page === totalPages - 1}
+                        >
+                            Вперед
+                        </button>
+                        <ul className="pagination-list">
+                            {Array.from({length: totalPages}, (_, i) => (<li key={i}>
+                                <button
+                                    className={`pagination-link button ${i === page ? 'is-current' : ''}`}
+                                    onClick={() => setPage(i)}
+                                >
+                                    {i + 1}
+                                </button>
+                            </li>))}
+                        </ul>
+                    </nav>)}
                 </div>
-            </section>
-        </div>
-    );
+            </div>
+        </section>
+    </div>);
 
 };
 
