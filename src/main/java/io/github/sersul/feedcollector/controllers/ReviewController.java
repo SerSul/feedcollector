@@ -46,6 +46,18 @@ public class ReviewController {
         return ResponseEntity.ok(pageResult);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<ReviewDto>> searchReviewsByTitle(
+            @RequestParam String title,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ReviewDto> pageResult = reviewService.findByTitleContaining(title, pageable);
+        return ResponseEntity.ok(pageResult);
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<ReviewDto> getReviewById(@PathVariable Long id) {
         var review = reviewService.getReviewById(id);

@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
     private final UserContext userContext;
 
     public ResponseEntity<StandardResponse> createReview(@RequestBody @Valid CreateReviewDto dto) {
@@ -53,6 +52,11 @@ public class ReviewService {
     public Page<ReviewDto> getAllReviews(Pageable pageable) {
         return reviewRepository.findAll(pageable)
                 .map(Review::toDto);
+    }
+
+    public Page<ReviewDto> findByTitleContaining(String title, Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findByTitleContainingIgnoreCase(title, pageable);
+        return reviews.map(Review::toDto);
     }
 
     public Optional<ReviewDto> getReviewById(Long id) {

@@ -17,4 +17,6 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Lon
 
     void save(Review review);
     Optional<Review> findById(Long id);
+
+    Page<Review> findByTitleContainingIgnoreCase(String title, Pageable pageable);
 }
