@@ -40,7 +40,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
@@ -59,18 +60,18 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        String[] origins = allowedOrigins.split(",");
-        configuration.setAllowedOrigins(List.of(origins));
-        configuration.addAllowedMethod("*");
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true); // для сессий и куки
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        String[] origins = allowedOrigins.split(",");
+//        configuration.setAllowedOrigins(List.of(origins));
+//        configuration.addAllowedMethod("*");
+//        configuration.setAllowedHeaders(List.of("*"));
+//        configuration.setAllowCredentials(true); // для сессий и куки
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
