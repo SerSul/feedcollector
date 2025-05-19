@@ -13,7 +13,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - "8080:8080"
-
+    networks:
+      - app-network
   frontend:
     build:
       context: ./frontend
@@ -22,3 +23,9 @@ services:
       - "3000:80"
     depends_on:
       - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
