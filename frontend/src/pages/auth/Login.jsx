@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-    MDBContainer, MDBInput, MDBBtn,
+    MDBContainer, MDBInput, MDBBtn
 } from 'mdb-react-ui-kit';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from "../../api";
 
 export default function Login() {
@@ -13,19 +15,32 @@ export default function Login() {
     const handleLogin = async () => {
         try {
             await api.post('/auth/login', {
-                user_name: email, password: password
+                user_name: email,
+                password: password
             });
 
             navigate("/home");
             window.location.reload();
         } catch (error) {
             console.error('Ошибка входа:', error);
+
+            // Показываем уведомление об ошибке
+            toast.error('Неверный логин или пароль', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
     };
 
     return (
         <div className="has-background-grey-lighter d-flex justify-content-center align-items-center" style={{height: '100%'}}>
-            <MDBContainer className="mb-5 d-flex flex-column box w-50 ">
+            <MDBContainer className="mb-5 d-flex flex-column box w-50">
                 <MDBInput
                     wrapperClass='mb-4'
                     id='form1'
@@ -51,7 +66,10 @@ export default function Login() {
                 <div className="text-center">
                     <p>Not a member? <a href="/register">Register</a></p>
                 </div>
-            </MDBContainer>
-        </div>);
 
+                {/* Контейнер для уведомлений */}
+                <ToastContainer />
+            </MDBContainer>
+        </div>
+    );
 }
