@@ -4,6 +4,7 @@ import {
     MDBContainer, MDBInput, MDBBtn,
 } from 'mdb-react-ui-kit';
 import api from '../../api';
+import {Button} from "react-bootstrap";
 
 export default function Register() {
     const [email, setEmail] = useState('');
@@ -53,9 +54,9 @@ export default function Register() {
                     onChange={e => setPassword(e.target.value)}
                 />
 
-                <MDBBtn className="mb-4" onClick={handleRegister}>
-                    Register
-                </MDBBtn>
+                <Button variant="outline-info" onClick={handleRegister}>
+                    Sign in
+                </Button>
 
                 <div className="text-center">
                     <p>Already have an account? <a href="/login">Sign in</a></p>

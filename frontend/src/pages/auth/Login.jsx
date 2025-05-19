@@ -6,6 +6,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from "../../api";
+import {Button} from "react-bootstrap";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -59,9 +60,9 @@ export default function Login() {
                     onChange={e => setPassword(e.target.value)}
                 />
 
-                <MDBBtn className="mb-4" onClick={handleLogin}>
+                <Button variant="outline-info" onClick={handleLogin}>
                     Sign in
-                </MDBBtn>
+                </Button>
 
                 <div className="text-center">
                     <p>Not a member? <a href="/register">Register</a></p>
