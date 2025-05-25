@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '/api', // Относительный путь для проксирования через Nginx
+    baseURL: process.env.REACT_APP_API_BASE_URL || '/api',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'

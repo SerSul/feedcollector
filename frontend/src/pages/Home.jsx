@@ -45,11 +45,11 @@ const Home = () => {
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
-        setPage(0); // при новом поиске возвращаемся на первую страницу
+        setPage(0);
     };
 
     return (
-        <div className="has-background-grey-lighter" style={{height: '100%'}}>
+        <div>
         <section className="section container">
             <div className="box is-small">
                 <div className="container">
