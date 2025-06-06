@@ -28,3 +28,14 @@
 - Docker 24+ и Docker Compose
 - JDK 21 (для локальной разработки)
 - Node.js 18+ (для фронтенда)
+
+### Запуск
+1. Клонируйте репозиторий:
+```bash
+git clone https://github.com/SerSul/feedcollector.git
+cd feedcollector
+```
+2. Запустите сервисы
+```bash
+docker-compose up -d
+```
